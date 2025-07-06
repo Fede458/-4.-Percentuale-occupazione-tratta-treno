@@ -1,0 +1,13 @@
+-- 4. Percentuale di biglietti venduti rispetto alla capienza per ogni tratta/treno
+SELECT 
+  T.id_treno,
+  T.modello,
+  TT.id_tratta,
+  COUNT(B.id_biglietto) AS biglietti,
+  ROUND((COUNT(B.id_biglietto) * 100.0) / T.capienza, 2) AS occupazione_percento
+FROM Treno T
+JOIN Treno_Tratta TT ON T.id_treno = TT.id_treno
+LEFT JOIN Biglietto B ON TT.id_tratta = B.id_tratta
+GROUP BY T.id_treno, TT.id_tratta
+ORDER BY occupazione_percento DESC;
+
